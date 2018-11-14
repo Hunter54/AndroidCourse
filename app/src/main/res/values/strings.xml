@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AndroidCourse</string>
+    <string name="google_account">Google Account</string>
+    <string name="username">username:</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
 </resources>
