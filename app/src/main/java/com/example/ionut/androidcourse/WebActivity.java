@@ -13,7 +13,7 @@ public class WebActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web);
         wvLink=findViewById(R.id.wvLink);
         wvLink.setWebViewClient(new WebViewClient());
-        wvLink.loadUrl("https://www.imdb.com/title/tt0816692/");
+        wvLink.loadUrl(getString(R.string.web_link));
 
     }
 }
