@@ -4,4 +4,9 @@
     <string name="username">username:</string>
     <string name="password">password</string>
     <string name="login">Login</string>
+    <string name="interstellar">Interstellar</string>
+    <string name="Genre">Sci-Fi,Adventure</string>
+    <string name="Actors">Matthew McConeughey</string>
+    <string name="Movie_Description">Some things</string>
+    <string name="link_imdb"><u>Link IMDb</u></string>
 </resources>

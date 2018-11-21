@@ -13,8 +13,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private EditText etUserName;
     private EditText etPassword;
-    private String registeredUser = "Ionut";
-    private String userPassword = "google";
+    private String registeredUser = "";
+    private String userPassword = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,13 +24,14 @@ public class LoginActivity extends AppCompatActivity {
         etUserName = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 String userNameFromForm = etUserName.getText().toString();
                 String passwordFromForm = etPassword.getText().toString();
                 Log.d("LoginActivity", "Login pressed");
-                if (userNameFromForm.equals(registeredUser)) {
-                    if (passwordFromForm.equals(userPassword)) {
+                if (userNameFromForm.equals(registeredUser))
+                {
+                    if (passwordFromForm.equals(userPassword))
+                    {
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     }
                     else {
