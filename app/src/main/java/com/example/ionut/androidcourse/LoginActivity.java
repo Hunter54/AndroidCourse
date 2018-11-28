@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     if (passwordFromForm.equals(userPassword))
                     {
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        startActivity(new Intent(LoginActivity.this, MoviesActivity.class));
                     }
                     else {
                         Toast.makeText(LoginActivity.this, "Wrong Password", Toast.LENGTH_LONG).show();
