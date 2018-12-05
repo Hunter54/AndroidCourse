@@ -7,16 +7,17 @@ import android.webkit.WebViewClient;
 
 public class WebActivity extends AppCompatActivity {
     private WebView wvLink;
-    private String movieLink="";
+    private String movieLink = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
-        wvLink=findViewById(R.id.wvLink);
+        wvLink = findViewById(R.id.wvLink);
         wvLink.setWebViewClient(new WebViewClient());
-        Bundle bundle= getIntent().getExtras();
-        if(bundle!=null) {
-            movieLink=bundle.getString(Constants.MOVIE_LINK);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            movieLink = bundle.getString(Constants.MOVIE_LINK);
         }
         wvLink.loadUrl(movieLink);
 

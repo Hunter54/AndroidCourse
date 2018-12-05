@@ -12,56 +12,56 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView tvMovieLink,tvMovieName,tvDescription,tvGenre;
+    private TextView tvMovieLink, tvMovieName, tvDescription, tvGenre;
     private ImageView ivMoviePoster;
     private RatingBar rbMovieRating;
-    private String movieName="";
-    private String movieDescription="";
-    private String movieGenre="";
-    private Float movieRating= 0f;
-    private String moviePhoto="";
-    private String movieLink ="";
+    private String movieName = "";
+    private String movieDescription = "";
+    private String movieGenre = "";
+    private Float movieRating = 0f;
+    private String moviePhoto = "";
+    private String movieLink = "";
     private int movieYear;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
-        Bundle bundle= getIntent().getExtras();
-        if(bundle!=null)
-        {
-            movieName=bundle.getString(Constants.MOVIE_NAME);
-            movieDescription=bundle.getString(Constants.MOVIE_DESCRIPTION);
-            movieGenre=bundle.getString(Constants.MOVIE_GENRE);
-            movieRating=bundle.getFloat(Constants.MOVIE_RATING);
-            movieYear=bundle.getInt(Constants.MOVIE_YEAR);
-            moviePhoto=bundle.getString(Constants.MOVIE_PHOTO);
-            movieLink=bundle.getString(Constants.MOVIE_LINK);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            movieName = bundle.getString(Constants.MOVIE_NAME);
+            movieDescription = bundle.getString(Constants.MOVIE_DESCRIPTION);
+            movieGenre = bundle.getString(Constants.MOVIE_GENRE);
+            movieRating = bundle.getFloat(Constants.MOVIE_RATING);
+            movieYear = bundle.getInt(Constants.MOVIE_YEAR);
+            moviePhoto = bundle.getString(Constants.MOVIE_PHOTO);
+            movieLink = bundle.getString(Constants.MOVIE_LINK);
         }
-        tvMovieName=findViewById(R.id.tvMovieName);
+        tvMovieName = findViewById(R.id.tvMovieName);
         tvMovieName.setText(movieName);
 
-        tvDescription=findViewById(R.id.tvMovieDescription);
+        tvDescription = findViewById(R.id.tvMovieDescription);
         tvDescription.setText(movieDescription);
 
-        tvGenre=findViewById(R.id.tvGenre);
+        tvGenre = findViewById(R.id.tvGenre);
         tvGenre.setText(movieGenre);
 
-        rbMovieRating=findViewById(R.id.rbMovieRating);
+        rbMovieRating = findViewById(R.id.rbMovieRating);
         rbMovieRating.setRating(movieRating);
 
-        ivMoviePoster=findViewById(R.id.ivMoviePoster);
+        ivMoviePoster = findViewById(R.id.ivMoviePoster);
         ivMoviePoster.setImageBitmap(decodeImageFromString(moviePhoto));
 
-        tvMovieLink=findViewById(R.id.tvMovieLink);
-        tvMovieLink.setText(movieLink);
+        tvMovieLink = findViewById(R.id.tvMovieLink);
+        tvMovieLink.setText("Link IMDb");
 
         tvMovieLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, WebActivity.class);
-                intent.putExtra(Constants.MOVIE_LINK,movieLink);
+                intent.putExtra(Constants.MOVIE_LINK, movieLink);
                 startActivity(intent);
             }
         });

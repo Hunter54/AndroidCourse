@@ -63,7 +63,7 @@
         <TextView
             android:id="@+id/tvMovieDescription"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/rbMovieRating"
             android:text="@string/Movie_Description"/>
         <TextView
@@ -72,7 +72,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvMovieDescription"
             android:text="@string/link_IMDb"
-            android:textColor="#0000CD"/>
+            android:textColor="#0000CD"
+            android:padding="5dp"
+            android:layout_margin="5dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"

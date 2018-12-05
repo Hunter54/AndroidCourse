@@ -38,5 +38,10 @@
             android:layout_height="wrap_content"
             android:text="@string/Genre"
             />
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:textSize="12sp"/>
     </LinearLayout>
 </RelativeLayout>

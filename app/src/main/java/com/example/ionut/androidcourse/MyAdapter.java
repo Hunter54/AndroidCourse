@@ -19,7 +19,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MovieViewHolder> {
     private AdapterClickListener clickListener;
 
 
-
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -29,6 +28,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MovieViewHolder> {
         public TextView tvMovieGenre;
         public RatingBar rbMovieRating;
         public ImageView ivMovieIcon;
+        public TextView tvMovieDescription;
 
         public MovieViewHolder(RelativeLayout v) {
             super(v);
@@ -42,13 +42,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MovieViewHolder> {
             tvMovieGenre = v.findViewById(R.id.tvMovieGenre);
             rbMovieRating = v.findViewById(R.id.rbRating);
             ivMovieIcon = v.findViewById(R.id.ivMovieIcon);
+            tvMovieDescription = v.findViewById(R.id.tvDescription);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public MyAdapter(ArrayList<Movie> myDataset, AdapterClickListener clickListener) {
         mDataset = myDataset;
-        this.clickListener=clickListener;
+        this.clickListener = clickListener;
     }
 
     // Create new views (invoked by the layout manager)
@@ -70,6 +71,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MovieViewHolder> {
         holder.tvMovieGenre.setText(movie.getGenre());
         holder.rbMovieRating.setRating(movie.getRating());
         holder.ivMovieIcon.setImageBitmap(decodeImageFromString(movie.getPhotoBase64()));
+        holder.tvMovieDescription.setText(movie.getShortDescription());
 
     }
 
