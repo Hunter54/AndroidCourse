@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MovieViewHolder>{
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MovieViewHolder> {
     private ArrayList<Movie> mDataset;
 
     // Provide a reference to the views for each data item
@@ -28,10 +28,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MovieViewHolder>{
 
         public MovieViewHolder(RelativeLayout v) {
             super(v);
-            tvMovieName=v.findViewById(R.id.tvName);
-            tvMovieGenre=v.findViewById(R.id.tvMovieGenre);
-            rbMovieRating=v.findViewById(R.id.rbRating);
-            ivMovieIcon=v.findViewById(R.id.ivMovieIcon);
+            tvMovieName = v.findViewById(R.id.tvName);
+            tvMovieGenre = v.findViewById(R.id.tvMovieGenre);
+            rbMovieRating = v.findViewById(R.id.rbRating);
+            ivMovieIcon = v.findViewById(R.id.ivMovieIcon);
         }
     }
 
@@ -44,8 +44,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MovieViewHolder>{
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        RelativeLayout v = (RelativeLayout) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_movies, parent, false);
+        RelativeLayout v = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_movies, parent, false);
         MovieViewHolder vh = new MovieViewHolder(v);
         return vh;
     }
@@ -55,7 +54,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MovieViewHolder>{
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        Movie movie =mDataset.get(position);
+        Movie movie = mDataset.get(position);
         holder.tvMovieName.setText(movie.getName());
         holder.tvMovieGenre.setText(movie.getGenre());
         holder.rbMovieRating.setRating(movie.getRating());
@@ -68,9 +67,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MovieViewHolder>{
     public int getItemCount() {
         return mDataset.size();
     }
-    private Bitmap decodeImageFromString(String base64){
-        byte[] decodedString = Base64.decode(base64,Base64.DEFAULT);
-        Bitmap decodeByte=BitmapFactory.decodeByteArray(decodedString,0,decodedString.length);
+
+    private Bitmap decodeImageFromString(String base64) {
+        byte[] decodedString = Base64.decode(base64, Base64.DEFAULT);
+        Bitmap decodeByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return decodeByte;
 
     }
