@@ -9,16 +9,22 @@ public class Movie {
     private String photoBase64;
     private float rating;
     private ArrayList<RelatedMovie> relatedMovieArrayList;
+    private String link;
+
+
 
     public Movie(String name, String shortDescription,
                  String genre, float rating, String photoBase64,
-                 ArrayList<RelatedMovie> relatedMovieArrayList) {
+                 ArrayList<RelatedMovie> relatedMovieArrayList, String link) {
         this.name = name;
         this.shortDescription = shortDescription;
         this.genre = genre;
         this.photoBase64 = photoBase64;
         this.rating = rating;
         this.relatedMovieArrayList = relatedMovieArrayList;
+        this.link=link;
+
+
     }
     //region-Getter, Setter
     public String getName() {
@@ -67,6 +73,14 @@ public class Movie {
 
     public void setRelatedMovieArrayList(ArrayList<RelatedMovie> relatedMovieArrayList) {
         this.relatedMovieArrayList = relatedMovieArrayList;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
     //endregion
 }

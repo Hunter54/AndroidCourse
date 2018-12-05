@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -15,11 +16,14 @@ import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MovieViewHolder> {
     private ArrayList<Movie> mDataset;
+    private AdapterClickListener clickListener;
+
+
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class MovieViewHolder extends RecyclerView.ViewHolder {
+    public class MovieViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView tvMovieName;
         public TextView tvMovieGenre;
@@ -28,6 +32,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MovieViewHolder> {
 
         public MovieViewHolder(RelativeLayout v) {
             super(v);
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickListener.onItemClick(v, getAdapterPosition());
+                }
+            });
             tvMovieName = v.findViewById(R.id.tvName);
             tvMovieGenre = v.findViewById(R.id.tvMovieGenre);
             rbMovieRating = v.findViewById(R.id.rbRating);
@@ -36,8 +46,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MovieViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(ArrayList<Movie> myDataset) {
+    public MyAdapter(ArrayList<Movie> myDataset, AdapterClickListener clickListener) {
         mDataset = myDataset;
+        this.clickListener=clickListener;
     }
 
     // Create new views (invoked by the layout manager)

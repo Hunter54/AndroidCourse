@@ -1,9 +1,11 @@
 package com.example.ionut.androidcourse;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -33,15 +35,28 @@ public class MoviesActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        ArrayList <Movie> moviesList = new ArrayList<>();
-        moviesList.add(new Movie("Interstellar","description","Sci-Fi", 4.7f, a,null));
-        moviesList.add(new Movie("Predestination","description","Sci-Fi, Adventure",4.5f,b,null));
-        moviesList.add(new Movie("The Prestige","description","Sci-fi, Drama",4.3f,c,null));
-        moviesList.add(new Movie("Inception","description","Sci-Fi, Adventure,Drama",4.9f,d,null));
-        moviesList.add(new Movie("Dunkirk","description","Drama, Adventure, Historic",4.0f,e,null));
-        moviesList.add(new Movie("Split","Descriptioin","Thriller, Drama, SF", 4.2f,f,null));
+        final ArrayList <Movie> moviesList = new ArrayList<>();
+        moviesList.add(new Movie("Interstellar","description","Sci-Fi", 4.7f, a,null,"https://www.imdb.com/title/tt0816692/"));
+        moviesList.add(new Movie("Predestination","description","Sci-Fi, Adventure",4.5f,b,null,"https://www.imdb.com/title/tt2397535/"));
+        moviesList.add(new Movie("The Prestige","description","Sci-fi, Drama",4.3f,c,null,"https://www.imdb.com/title/tt0482571/"));
+        moviesList.add(new Movie("Inception","description","Sci-Fi, Adventure,Drama",4.9f,d,null,"https://www.imdb.com/title/tt1375666/"));
+        moviesList.add(new Movie("Dunkirk","description","Drama, Adventure, Historic",4.0f,e,null,"https://www.imdb.com/title/tt5013056/"));
+        moviesList.add(new Movie("Split","Descriptioin","Thriller, Drama, SF", 4.2f,f,null,"https://www.imdb.com/title/tt4972582/"));
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(moviesList);
+        mAdapter = new MyAdapter(moviesList, new AdapterClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Movie clickedMovie= moviesList.get(position);
+                Intent intent=new Intent(MoviesActivity.this, MainActivity.class);
+                intent.putExtra(Constants.MOVIE_NAME,clickedMovie.getName());
+                intent.putExtra(Constants.MOVIE_DESCRIPTION,clickedMovie.getShortDescription());
+                intent.putExtra(Constants.MOVIE_GENRE,clickedMovie.getGenre());
+                intent.putExtra(Constants.MOVIE_PHOTO,clickedMovie.getPhotoBase64());
+                intent.putExtra(Constants.MOVIE_RATING,clickedMovie.getRating());
+                intent.putExtra(Constants.MOVIE_LINK, clickedMovie.getLink());
+                startActivity(intent);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
     }
 

@@ -24,7 +24,9 @@
         <activity
             android:name=".WebActivity"
             android:label="@string/web_link"></activity>
-        <activity android:name=".MoviesActivity"></activity>
+        <activity
+            android:name=".MoviesActivity"
+            android:label="@string/MovieApp"></activity>
     </application>
 
 </manifest>
