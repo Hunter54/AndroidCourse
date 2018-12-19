@@ -11,4 +11,6 @@
     <string name="link_IMDb"><u>Link IMDb</u></string>
     <string name="activity_movie">Interstellar</string>
     <string name="web_link">https://www.imdb.com/title/tt0816692/</string>
+    <string name="title_movie_list">Movies</string>
+    <string name="title_movie_detail">Movie Detail</string>
 </resources>

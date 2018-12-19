@@ -1,35 +1,53 @@
-package com.example.ionut.androidcourse;
+package com.example.ionut.androidcourse.ui.fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.ionut.androidcourse.Constants;
+import com.example.ionut.androidcourse.MovieDetailActivity;
+import com.example.ionut.androidcourse.MovieListActivity;
+import com.example.ionut.androidcourse.R;
+import com.example.ionut.androidcourse.ui.activity.WebActivity;
+
+/**
+ * A fragment representing a single Movie detail screen.
+ * This fragment is either contained in a {@link MovieListActivity}
+ * in two-pane mode (on tablets) or a {@link MovieDetailActivity}
+ * on handsets.
+ */
+public class MovieDetailFragment extends Fragment {
     private TextView tvMovieLink, tvMovieName, tvDescription, tvGenre;
     private ImageView ivMoviePoster;
     private RatingBar rbMovieRating;
     private String movieName = "";
     private String movieDescription = "";
     private String movieGenre = "";
-    private Float movieRating = 0f;
+    private Float movieRating = 0.5f;
     private String moviePhoto = "";
     private String movieLink = "";
     private int movieYear;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_main,null);
+    }
 
-
-        Bundle bundle = getIntent().getExtras();
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Bundle bundle = getArguments();
         if (bundle != null) {
             movieName = bundle.getString(Constants.MOVIE_NAME);
             movieDescription = bundle.getString(Constants.MOVIE_DESCRIPTION);
@@ -39,28 +57,28 @@ public class MainActivity extends AppCompatActivity {
             moviePhoto = bundle.getString(Constants.MOVIE_PHOTO);
             movieLink = bundle.getString(Constants.MOVIE_LINK);
         }
-        tvMovieName = findViewById(R.id.tvMovieName);
+        tvMovieName = view.findViewById(R.id.tvMovieName);
         tvMovieName.setText(movieName);
 
-        tvDescription = findViewById(R.id.tvMovieDescription);
+        tvDescription = view.findViewById(R.id.tvMovieDescription);
         tvDescription.setText(movieDescription);
 
-        tvGenre = findViewById(R.id.tvGenre);
+        tvGenre = view.findViewById(R.id.tvGenre);
         tvGenre.setText(movieGenre);
 
-        rbMovieRating = findViewById(R.id.rbMovieRating);
+        rbMovieRating = view.findViewById(R.id.rbMovieRating);
         rbMovieRating.setRating(movieRating);
 
-        ivMoviePoster = findViewById(R.id.ivMoviePoster);
+        ivMoviePoster = view.findViewById(R.id.ivMoviePoster);
         ivMoviePoster.setImageBitmap(decodeImageFromString(moviePhoto));
 
-        tvMovieLink = findViewById(R.id.tvMovieLink);
+        tvMovieLink = view.findViewById(R.id.tvMovieLink);
         tvMovieLink.setText("Link IMDb");
 
         tvMovieLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, WebActivity.class);
+                Intent intent = new Intent(getActivity(), WebActivity.class);
                 intent.putExtra(Constants.MOVIE_LINK, movieLink);
                 startActivity(intent);
             }

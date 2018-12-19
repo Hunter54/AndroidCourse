@@ -1,9 +1,12 @@
-package com.example.ionut.androidcourse;
+package com.example.ionut.androidcourse.ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.example.ionut.androidcourse.Constants;
+import com.example.ionut.androidcourse.R;
 
 public class WebActivity extends AppCompatActivity {
     private WebView wvLink;
