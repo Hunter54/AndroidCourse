@@ -1,19 +1,21 @@
 package com.example.ionut.androidcourse;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
-import android.util.Base64;
-import android.view.View;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBar;
-import android.view.MenuItem;
+import android.util.Base64;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.ionut.androidcourse.ui.fragment.MovieDetailFragment;
+import com.example.ionut.androidcourse.databinding.ActivityMainBinding;
+import com.example.ionut.androidcourse.ui.activity.WebActivity;
 
 /**
  * An activity representing a single Movie detail screen. This
@@ -23,66 +25,102 @@ import com.example.ionut.androidcourse.ui.fragment.MovieDetailFragment;
  */
 public class MovieDetailActivity extends AppCompatActivity {
 
+    private static final String TAG = MovieDetailActivity.class.getSimpleName();
+    private TextView tvMovieLink;
+    private TextView tvMovieName;
+    private TextView tvGenre;
+    private TextView tvDescription;
+    private ImageView ivMoviePoster;
+    private RatingBar rbMovieRating;
+
+    private String movieName = "";
+    private String movieGenre = "";
+    private String moviePhotoBase64 = "";
+    private float movieRating = 0;
+    private String movieDescription = "";
+    private String movieLink = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
-        setSupportActionBar(toolbar);
+        ActivityMainBinding binding;
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+        setContentView(R.layout.activity_main);
+        Bundle bundle= getIntent().getExtras();
+        if(bundle != null)
+        {
+            try{
+                movieName = bundle.getString(Constants.MOVIE_NAME);
+                movieGenre = bundle.getString(Constants.MOVIE_GENRE);
+                moviePhotoBase64 = bundle.getString(Constants.MOVIE_PHOTO);
+                movieRating = bundle.getFloat(Constants.MOVIE_RATING);
+                movieDescription = bundle.getString(Constants.MOVIE_DESCRIPTION);
+                movieLink = bundle.getString(Constants.MOVIE_LINK);
+            } catch (Exception ex){
+                ex.printStackTrace();
+                Toast.makeText(this,"Crashed and died", Toast.LENGTH_LONG).show();
+            }
+        }
+        tvDescription=binding.tvMovieDescription;
+        tvMovieName=binding.tvMovieName;
+        ivMoviePoster=binding.ivMoviePoster;
+        tvGenre=binding.tvGenre;
+        tvMovieLink=binding.tvMovieLink;
+        rbMovieRating=binding.rbMovieRating;
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        tvDescription.setText(movieDescription);
+        tvMovieName.setText(movieName);
+        tvGenre.setText(movieGenre);
+        tvMovieLink.setText(movieLink);
+        rbMovieRating.setRating(movieRating);
+        ivMoviePoster.setImageBitmap(decodeImageFromString(moviePhotoBase64));
+
+        tvMovieLink.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                startActivity(new Intent(MovieDetailActivity.this, WebActivity.class));
             }
         });
 
-        // Show the Up button in the action bar.
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
 
-        // savedInstanceState is non-null when there is fragment state
-        // saved from previous configurations of this activity
-        // (e.g. when rotating the screen from portrait to landscape).
-        // In this case, the fragment will automatically be re-added
-        // to its container so we don't need to manually add it.
-        // For more information, see the Fragments API guide at:
-        //
-        // http://developer.android.com/guide/components/fragments.html
-        //
-        if (savedInstanceState == null) {
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putString(MovieDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(MovieDetailFragment.ARG_ITEM_ID));
-            MovieDetailFragment fragment = new MovieDetailFragment();
-            fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.movie_detail_container, fragment)
-                    .commit();
-        }
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            // This ID represents the Home or Up button. In the case of this
-            // activity, the Up button is shown. For
-            // more details, see the Navigation pattern on Android Design:
-            //
-            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-            //
-            navigateUpTo(new Intent(this, MovieListActivity.class));
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart() called");
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume() called");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause() called");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG, "onRestart() called");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop() called");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy() called");
+    }
+
     private Bitmap decodeImageFromString(String base64) {
         byte[] decodedString = Base64.decode(base64, Base64.DEFAULT);
         Bitmap decodeByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);

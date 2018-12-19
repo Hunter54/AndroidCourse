@@ -75,22 +75,26 @@ public class MovieListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, mTwoPane));
+        recyclerView.setAdapter(new MovieItemRecyclerViewAdapter(this, mDataset, mTwoPane));
     }
 
-    public class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.MovieViewHolder> {
+    public static class MovieItemRecyclerViewAdapter extends RecyclerView.Adapter<MovieItemRecyclerViewAdapter.MovieViewHolder> {
 
         private final MovieListActivity mParentActivity;
-        private final List<DummyContent.DummyItem> mValues;
+        private final List<Movie> mMovies;
         private final boolean mTwoPane;
-        private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        private final AdapterClickListener mOnClickListener = new AdapterClickListener() {
             @Override
-            public void onClick(View view) {
-                DummyContent.DummyItem item = (DummyContent.DummyItem) view.getTag();
+            public void onItemClick(View view, int position) {
+                Movie item = mMovies.get(position);
                 if (mTwoPane) {
                     Bundle arguments = new Bundle();
-                    arguments.putString(MovieDetailFragment.ARG_ITEM_ID, item.id);
+                    arguments.putString(Constants.MOVIE_NAME, item.getName());
+                    arguments.putString(Constants.MOVIE_DESCRIPTION, item.getShortDescription());
+                    arguments.putFloat(Constants.MOVIE_RATING, item.getRating());
+                    arguments.putString(Constants.MOVIE_GENRE, item.getGenre());
+                    arguments.putString(Constants.MOVIE_LINK, item.getLink());
+                    arguments.putString(Constants.MOVIE_PHOTO, item.getPhotoBase64());
                     MovieDetailFragment fragment = new MovieDetailFragment();
                     fragment.setArguments(arguments);
                     mParentActivity.getSupportFragmentManager().beginTransaction()
@@ -99,19 +103,21 @@ public class MovieListActivity extends AppCompatActivity {
                 } else {
                     Context context = view.getContext();
                     Intent intent = new Intent(context, MovieDetailActivity.class);
-                    intent.putExtra(MovieDetailFragment.ARG_ITEM_ID, item.id);
-
+                    intent.putExtra(Constants.MOVIE_NAME, item.getName());
+                    intent.putExtra(Constants.MOVIE_DESCRIPTION, item.getShortDescription());
+                    intent.putExtra(Constants.MOVIE_RATING, item.getRating());
+                    intent.putExtra(Constants.MOVIE_GENRE, item.getGenre());
+                    intent.putExtra(Constants.MOVIE_LINK, item.getLink());
+                    intent.putExtra(Constants.MOVIE_PHOTO, item.getPhotoBase64());
                     context.startActivity(intent);
                 }
             }
         };
 
-        SimpleItemRecyclerViewAdapter(MovieListActivity parent,
-                                      List<DummyContent.DummyItem> items,
-                                      boolean twoPane) {
-            mValues = items;
-            mParentActivity = parent;
-            mTwoPane = twoPane;
+        MovieItemRecyclerViewAdapter(MovieListActivity parent, List<Movie> items, boolean twoPane) {
+            this.mMovies = items;
+            this.mParentActivity = parent;
+            this.mTwoPane = twoPane;
         }
 
         @Override
@@ -123,15 +129,21 @@ public class MovieListActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(MovieViewHolder holder, int position) {
+        public void onBindViewHolder(MovieViewHolder holder, final int position) {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
-            Movie movie = mDataset.get(position);
+            Movie movie = mMovies.get(position);
             holder.tvMovieName.setText(movie.getName());
             holder.tvMovieGenre.setText(movie.getGenre());
             holder.rbMovieRating.setRating(movie.getRating());
             holder.ivMovieIcon.setImageBitmap(decodeImageFromString(movie.getPhotoBase64()));
             holder.tvMovieDescription.setText(movie.getShortDescription());
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnClickListener.onItemClick(v, position);
+                }
+            });
 
         }
         private Bitmap decodeImageFromString(String base64) {
@@ -143,7 +155,7 @@ public class MovieListActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return mValues.size();
+            return mMovies.size();
         }
 
         public class MovieViewHolder extends RecyclerView.ViewHolder {
@@ -156,12 +168,12 @@ public class MovieListActivity extends AppCompatActivity {
 
             public MovieViewHolder(RelativeLayout v) {
                 super(v);
-                v.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        clickListener.onItemClick(v, getAdapterPosition());
-                    }
-                });
+//                v.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        clickListener.onItemClick(v, getAdapterPosition());
+//                    }
+//                });
                 tvMovieName = v.findViewById(R.id.tvName);
                 tvMovieGenre = v.findViewById(R.id.tvMovieGenre);
                 rbMovieRating = v.findViewById(R.id.rbRating);
